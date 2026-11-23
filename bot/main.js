@@ -65,17 +65,6 @@ function createCommandContext() {
       return;
     }
 
-    const zedCommand = commands.get("زيد");
-    if (zedCommand && typeof zedCommand.handleMessage === "function") {
-      const handledByZed = await zedCommand
-        .handleMessage(api, event)
-        .catch((e) => {
-          console.error("[الأسطورة جان] خطأ في رد زيد:", e.message || e);
-          return false;
-        });
-      if (handledByZed) return;
-    }
-
     if (isAdmin(senderID)) {
       const timerCmd = commands.get("المؤقت");
       if (timerCmd && typeof timerCmd.handleReply === "function") {
@@ -308,6 +297,17 @@ function createCommandContext() {
           .execute(api, event)
           .catch((e) => console.error("[الأسطورة جان] خطأ في يوت:", e.message));
       return;
+    }
+
+    const zedCommand = commands.get("زيد");
+    if (zedCommand && typeof zedCommand.handleMessage === "function") {
+      const handledByZed = await zedCommand
+        .handleMessage(api, event)
+        .catch((e) => {
+          console.error("[الأسطورة جان] خطأ في رد زيد:", e.message || e);
+          return false;
+        });
+      if (handledByZed) return;
     }
   }
 
