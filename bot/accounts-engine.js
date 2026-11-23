@@ -217,8 +217,12 @@ function createAccountsEngine({ store, onMessage, onEvent, log, loginFn, context
       const api = entry.account.api;
       if (api && typeof api.getCurrentUserID === "function") {
         const id = String(api.getCurrentUserID() || "");
-        if (id) ids.push(id);
+        if (id) {
+          ids.push(id);
+          continue;
+        }
       }
+      if (entry.account.id) ids.push(String(entry.account.id));
     }
     return ids;
   }
