@@ -1,0 +1,31 @@
+{
+  "name": "legend-jan-bot",
+  "version": "1.0.0",
+  "description": "بوت الأسطورة جان - بوت ماسنجر احترافي لا يتوقف",
+  "main": "index.js",
+  "scripts": {
+    "start": "node supervisor.js",
+    "dev": "node supervisor.js",
+    "test": "node --test \"test/*.test.js\"",
+    "postinstall": "node scripts/patch-ws3-fca.js"
+  },
+  "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "@ffprobe-installer/linux-x64": "^5.2.0",
+    "canvas": "^3.2.3",
+    "dotenv": "^17.4.2",
+    "express": "^4.22.3",
+    "openai": "6.49.0",
+    "ws3-fca": "^3.5.2",
+    "ytpl": "^2.3.0"
+  },
+  "allowScripts": {
+    "@ffmpeg-installer/linux-x64@4.1.0": true,
+    "@ffprobe-installer/linux-x64@5.2.0": true,
+    "canvas@3.2.3": true,
+    "es5-ext@0.10.64": true
+  },
+  "devDependencies": {
+    "patch-package": "^8.0.1"
+  }
+}
