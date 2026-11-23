@@ -224,13 +224,6 @@ function onLogin(err, api) {
   if (api.ctx && api.ctx.lastSeqId) api.ctx.firstListen = true;
   loadCommands();
   startListening(api);
-
-  try {
-    const qasf = commands.get("قصف");
-    if (qasf && qasf.resumeAll) qasf.resumeAll(api);
-  } catch (error) {
-    log.error("commands", "خطأ في استئناف قصف", { message: error.message });
-  }
 }
 
 function startBot() {

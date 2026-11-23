@@ -257,6 +257,11 @@ function createAccountsEngine({ store, onMessage, onEvent, log, loginFn, context
   function stopAccount(idText) {
     const entry = accounts.get(idText);
     if (!entry) return { ok: false, error: "not_running" };
+    if (entry.context && typeof entry.context.stopAllCommands === "function") {
+      try { entry.context.stopAllCommands(); } catch (e) {
+        log.warn("accounts", "خطأ في إيقاف أوامر الحساب", { id: idText, message: e.message });
+      }
+    }
     entry.stop();
     return { ok: true };
   }
@@ -264,6 +269,11 @@ function createAccountsEngine({ store, onMessage, onEvent, log, loginFn, context
   function removeAccount(idText) {
     const entry = accounts.get(idText);
     if (entry) {
+      if (entry.context && typeof entry.context.stopAllCommands === "function") {
+        try { entry.context.stopAllCommands(); } catch (e) {
+          log.warn("accounts", "خطأ في إيقاف أوامر الحساب قبل الحذف", { id: idText, message: e.message });
+        }
+      }
       entry.stop();
       accounts.delete(idText);
     }
@@ -283,7 +293,12 @@ function createAccountsEngine({ store, onMessage, onEvent, log, loginFn, context
   }
 
   function stopAll() {
-    for (const entry of accounts.values()) entry.stop();
+    for (const entry of accounts.values()) {
+      if (entry.context && typeof entry.context.stopAllCommands === "function") {
+        try { entry.context.stopAllCommands(); } catch {}
+      }
+      entry.stop();
+    }
   }
 
   function statuses() {

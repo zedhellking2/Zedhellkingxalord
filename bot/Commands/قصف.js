@@ -215,6 +215,13 @@ module.exports = {
     return SPAM_STOP;
   },
 
+  stopAll() {
+    for (const threadID of activeLoops.keys()) {
+      activeLoops.set(threadID, false);
+    }
+    console.log(`[قصف] تم إيقاف جميع حلقات الإرسال (${activeLoops.size} جروب)`);
+  },
+
   resumeAll(api) {
     for (const [threadID, active] of activeLoops.entries()) {
       if (active) {

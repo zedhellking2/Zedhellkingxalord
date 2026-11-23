@@ -405,7 +405,17 @@ function createCommandContext() {
     }
   }
 
-  return { commands, loadCommands, handleMessage, handleEvent };
+  function stopAllCommands() {
+    for (const cmd of commands.values()) {
+      if (cmd && typeof cmd.stopAll === "function") {
+        try { cmd.stopAll(); } catch (e) {
+          console.error(`[الأسطورة جان] خطأ في إيقاف أمر ${cmd.name}:`, e.message || e);
+        }
+      }
+    }
+  }
+
+  return { commands, loadCommands, handleMessage, handleEvent, stopAllCommands };
 }
 
 const defaultContext = createCommandContext();
